@@ -36,3 +36,12 @@ export const notAdministrator = ({ interaction } : IMessageEmbed) =>
 
   return embed
 }
+
+export const userNotFound = ({ interaction } : IMessageEmbed) =>
+{
+  const embed = messageEmbed({ interaction , name : "USER NOT FOUND" })
+    .setDescription(`Parece que no tienes una cuenta en este servidor o.O. Para crear una cuenta, solo tienes que usar \`/start\`.
+    ¡Y ya estarás registrado! 😳`)
+
+  return embed
+}
