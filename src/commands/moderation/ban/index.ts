@@ -1,5 +1,5 @@
-import { ICommand } from "types/ICommand";
-import ban from "./ban";
+import { ICommand } from "types/ICommand"
+import ban from "./ban"
 
 export default {
   options : {
