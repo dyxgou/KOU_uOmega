@@ -31,26 +31,22 @@ const suggestion : ICallback = async (interaction) =>
   if (!channel?.isText())
     return
 
-  const collector = await channel.send({ embeds : [embed] , components : [row] }).then(msg => {
-    return msg.createMessageComponentCollector({
-      componentType : "BUTTON",
-      filter : (user) => user.id === interaction.user.id ,
-      max : 1,
-      time : 1000 * 60 * 60 * 24 * 7 // 7 Days
+    const collector = await channel.send({ embeds : [embed] , components : [row] }).then(msg => {
+      return msg.createMessageComponentCollector({
+        componentType : "BUTTON",
+        filter : (int) => int.user.id !== interaction.user.id || !int.memberPermissions?.has("MANAGE_GUILD")
+      })
     })
-  })
 
-  interaction.reply({ content : "Tu sugerencia ha sido enviada." , ephemeral : true })
+    interaction.reply({ content : "Tu sugerencia ha sido enviada." , ephemeral : true })
 
-  collector.on("end" , async (buttonInt) =>
-  {
-    const int = buttonInt.first()
+    collector.once("collect" , async (int) =>
+    {
+      if (!int?.isButton())
+        return
 
-    if (!int?.isButton())
-      return
-
-    return checkSuggestion({ embed , int , suggestion , author : interaction.user })
-  })
+      return checkSuggestion({ embed , int , suggestion , author : interaction.user })
+    })
 }
 
 export default suggestion

@@ -16,13 +16,16 @@ const checkSuggestion = ({ embed , int , suggestion , author } : ICheckSuggestio
   if (!(int.memberPermissions?.has("ADMINISTRATOR") || int.memberPermissions?.has("MANAGE_GUILD")))
     return int.reply({ content : "No tienes los permisos suficientes para usar este comando..." , ephemeral : true })
 
+  if (int.user.id === author.id)
+    return int.reply({ content : "No puedes aceptar tu propia sugerencia..." , ephemeral : true })
+
   const suggestionStatus = int.customId as SggStatus
 
   if (suggestionStatus === "ACCEPT")
   {
     embed.setDescription(`**( <a:Ok1:967855659653685298> )** FROM : ${author}
     ${suggestion}
-    **ESTADO** : \` ACCEPTADA \`
+    **ESTADO** : \` ACEPTADA \`
     **By** : ${int.user}`)
   }
   else if (suggestionStatus === "PENDING")
