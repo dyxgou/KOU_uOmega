@@ -1,6 +1,6 @@
 import UserSchema from "../../../schemas/UserSchema"
 import { ICallback } from "types/ICommand"
-import { messageEmbed } from "../../../utils/embeds"
+import { messageEmbed, userNotFound } from "../../../utils/embeds"
 import { getMentionatedInfo , getUserInfo } from "../../../utils/userInfo"
 import checkWinner, { optionsRow } from "./checkWinner"
 
@@ -23,8 +23,11 @@ const paperRocksScissors : ICallback = async (interaction) =>
     UserSchema.findOne(challengedInfo , { cash : true , userId : true })
   ])
 
-  if (!userChallenging || !userChallenged)
-    return interaction.reply({ content : `Puede que tu o <@!${challengedInfo?.userId}>, no estén registrados en el sistema de Economía. Para registrarse pueden usar \`/start\`` })
+  if (!userChallenging)
+    return interaction.reply({ embeds : [userNotFound({ interaction })] })
+
+  if (!userChallenged)
+    return interaction.reply({ content : `<@!${challengedInfo?.userId}> no tiene una cuenta en éste servidor, para crear una puedes usar \`/start\`.` })
 
   const bet = amount === ALL_MONEY ? userChallenging.cash : parseInt(amount)
 
