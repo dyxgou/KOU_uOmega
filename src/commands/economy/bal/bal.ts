@@ -2,11 +2,13 @@ import { randomInt } from "mathjs"
 import UserSchema from "../../../schemas/UserSchema"
 import { ICallback } from "types/ICommand"
 import { messageEmbed, userNotFound } from "../../../utils/embeds"
-import { getUserInfo } from "../../../utils/userInfo"
+import { getUserInfo , getMentionatedInfo } from "../../../utils/userInfo"
 
 const bal : ICallback = async (interaction) =>
 {
-  const userInfo = getUserInfo(interaction)
+  const userMention = interaction.options.getUser("user")
+
+  const userInfo = userMention ? getMentionatedInfo(interaction , "user") : getUserInfo(interaction)
 
   const user = await UserSchema.findOne(userInfo , { cash : true , bank : true })
 
