@@ -13,9 +13,9 @@ export const getUserInfo = (interaction : CommandInteraction<CacheType>) =>
   }
 }
 
-export const getMentionatedInfo = (interaction : CommandInteraction<CacheType> , userName : string) =>
+export const getMentionatedInfo = (interaction : CommandInteraction<CacheType> , optionUserTag : string) =>
 {
-  const user = interaction.options.getUser(userName)
+  const user = interaction.options.getUser(optionUserTag)
   const { guildId } = interaction
 
   if (!user || !guildId)
