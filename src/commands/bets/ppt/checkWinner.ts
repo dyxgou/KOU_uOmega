@@ -15,6 +15,7 @@ const checkWinner = async ({ int , embed , bet , userChallenged , userChallengin
   const currentUser : CurrentUser = userId === userChallenging.userId ? "challenging" : "challenged"
 
   hands[currentUser] = handOption
+  int.reply({ content : "..." , ephemeral : true })
   int.channel?.send(`${int.user} ya ha elegido. 😈`)
 
   const { challenged , challenging } = hands
@@ -34,14 +35,16 @@ const checkWinner = async ({ int , embed , bet , userChallenged , userChallengin
       embed.setDescription(`| 🏆 |**WINNER** <@!${userChallenging.userId}>
       
       El retador <@!${userChallenging.userId}>, se mantiene invicto con una victoria más y ha ganado \`$${bet}\`. 🎉`)
-      await userChallenging.updateOne({ cash : userChallenging.cash + bet })
+      await userChallenging.updateOne({ $inc : { cash : bet } })
+      await userChallenged.updateOne({ $inc : { cash : -bet } })
     }
     else
     {
       embed.setDescription(`| 🏆 |**WINNER** <@!${userChallenged.userId}>
       
       <@!${userChallenged.userId}> ha venido para acabarle la racha a <@!${userChallenging.userId}> y con esto se lleva un premio de \`$${bet}\`. 🎉`)
-      await userChallenged.updateOne({ cash : userChallenged.cash + bet })
+      await userChallenged.updateOne({ $inc : { cash : bet } })
+      await userChallenging.updateOne({ $inc : { cash : -bet } })
     }
   } catch (err) {
     console.error({ err })
