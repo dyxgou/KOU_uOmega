@@ -27,7 +27,7 @@ const work : ICallback = async (interaction) =>
   const randomUser = interaction.guild?.members.cache.random()
 
   const embed = messageEmbed({ interaction , name : "| 💵 | WORK - ECONOMY" })
-    .setDescription(`💰 Le has ganado un pvp a ${randomUser}, y has obtenido una ganancia de \`$${amount}\` que estaban convenientemente escondidas en su bolcillo. 💰`)
+    .setDescription(`💰 Has hackeado a ${randomUser} y obtuviste una ganancia de \`$${amount}\` que estaban convenientemente escondidas en su bolcillo. 💰`)
 
   try {
     await user.updateOne({ $inc : { cash : amount } })
