@@ -31,7 +31,7 @@ const pay : ICallback = async (interaction) =>
     return interaction.reply({ content : `No tienes actualmente \`$${amountToPay}\` en la **billetera** para pagar a <@!${mentionatedInfo?.userId}>. 😡` })
 
   const embed = messageEmbed({ interaction , name : `| 💵 | Pay - Economy` })
-    .setDescription(`Le has pagado \`$${amount}\` a <@!${userToPay.userId}>. 😍`)
+    .setDescription(`Le has pagado \`$${amountToPay}\` a <@!${userToPay.userId}>. 😍`)
 
   try {
     await userPaying.updateOne({ $inc : { cash : -amountToPay } })
