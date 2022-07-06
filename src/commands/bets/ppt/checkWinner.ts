@@ -15,7 +15,6 @@ const checkWinner = async ({ int , embed , bet , userChallenged , userChallengin
   const currentUser : CurrentUser = userId === userChallenging.userId ? "challenging" : "challenged"
 
   hands[currentUser] = handOption
-  int.reply({ content : "..." , ephemeral : true })
   int.channel?.send(`${int.user} ya ha elegido. 😈`)
 
   const { challenged , challenging } = hands
