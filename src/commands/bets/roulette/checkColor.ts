@@ -1,10 +1,10 @@
-import { ButtonInteraction, CacheType, MessageEmbed , Collection } from "discord.js"
+import { ButtonInteraction, CacheType, MessageEmbed } from "discord.js"
 import { button , buttonsRow } from "../../../utils/button"
 import betAmount from "./betAmount"
 import { User } from "../../../types/Schemas"
 
 type CheckColors = {
-  int : Collection<string, ButtonInteraction<CacheType>>,
+  int : ButtonInteraction<CacheType>,
   amountToBet : number,
   user : User,
   embed : MessageEmbed
@@ -12,12 +12,7 @@ type CheckColors = {
 
 const checkColor = async ({ int , amountToBet , user , embed } : CheckColors) =>
 {
-  const interaction = int.first()
-
-  if (!interaction)
-    return
-
-  const colorID = interaction.customId
+  const colorID = int.customId
 
   const { amount , isWinner } = betAmount(amountToBet)
 
@@ -29,7 +24,7 @@ const checkColor = async ({ int , amountToBet , user , embed } : CheckColors) =>
   else
   {
     embed.setDescription(`¡El 🪙 \`${colorID.toLowerCase()}\` no era!
-    **Has perdido : \`$${amount}\`**`)
+    **Has perdido : \`$${-amount}\`**`)
   }
 
   try {
@@ -39,7 +34,7 @@ const checkColor = async ({ int , amountToBet , user , embed } : CheckColors) =>
     embed.setDescription("Ops... Saliste del casino y un ladrón te robó lo que ganaste. 😢")
   }
 
-  return interaction.reply({ embeds : [embed] })
+  return int.reply({ embeds : [embed] })
 }
 
 const buttons = [

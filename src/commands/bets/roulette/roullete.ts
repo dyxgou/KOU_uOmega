@@ -25,19 +25,21 @@ const roulette : ICallback = async (interaction) =>
     return interaction.reply(`No tienes la cantidad de \`$${amountToBet}\` en la billetera para poder apostarla. 😡`)
 
   const embed = messageEmbed({ interaction , name : `${interaction.user.username}'s Roullete 🤑` })
-    .setDescription(`Para jugar a la **Ruleta**, tienes que elegir entre el color **🪙 Rojo** o el color **🪙 Negro** y tendrás un 50% de probabilidad de ganar el doble de la cantidad que apostaste o perderlo todo. 😈
+    .setDescription(`Para jugar a la **Ruleta**, tienes que elegir un color, :coin: \`Rojo\` o :coin: \`Negro\`, tienes un **50% de probabilidad** de **ganar el doble de lo que has apostado** o **perderlo todo**. ¡Suerte cámarada! 😈
     
-    *Tienes un minuto para elegir, o la apuesta será cancelada.*`)
+    \`APUESTA\` : \`$${amountToBet}\``)
+
+  interaction.reply({ content : "Que inicie el juego. 😈" , ephemeral : true })
 
   const collector = await interaction.channel?.send({ embeds : [embed] , components : [row] }).then(msg => {
     return msg.createMessageComponentCollector({
       componentType : "BUTTON",
-      filter : (int) => int.user.id !== interaction.user.id,
+      filter : (int) => int.user.id === interaction.user.id,
       time : 1000 * 60 // 1 Minute
     })
   })
 
-  collector?.on("end" , async (int) => await checkColor({ int , amountToBet , embed , user }))
+  collector?.once("collect" , async (int) => await checkColor({ int , user , amountToBet , embed }))
 }
 
 export default roulette
