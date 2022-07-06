@@ -34,10 +34,10 @@ const rob : ICallback = async (interaction) =>
     
     **BOTÍN** : \`$${amount}\``)
   }
-  else if (userToSteal.cash <= 1000)
+  else if (!isStealed && userToSteal.cash <= 1000)
   {
     embed.setDescription(`${interaction.user}, eres la rata más rata que he visto 😡.
-    ¿ Cómo le puedes robar al ángel de <@!${userToSteal.userId}>, si apenas tiene \`$${userToSteal.cash}\` ? 😢
+    ¿ Cómo le puedes robar al ángel de <@!${userToStealInfo?.userId}>?, Si apenas tiene \`$${userToSteal.cash}\` en su billetera. 😢
     
     **MUTAL** : \`$${-amount}\``)
   }
@@ -56,8 +56,8 @@ const rob : ICallback = async (interaction) =>
     }
     else
     {
-      await userStealing.updateOne({ $inc : { cash : -amount } })
-      await userToSteal.updateOne({ $inc : { cash : amount } })
+      await userStealing.updateOne({ $inc : { cash : amount } })
+      await userToSteal.updateOne({ $inc : { cash : -amount } })
     }
   } catch (error) {
     console.error(error)
