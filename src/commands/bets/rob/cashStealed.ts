@@ -12,19 +12,19 @@ const cashStealed = (userToStealCash : number) : ICashStealed =>
 
   if (userToStealCash <= 1000)
     return {
-      amount : -1000,
+      amount : 1000,
       isStealed : false
     }
 
   if (!isStealed)
     return {
       amount : -(userToStealCash / 4),
-      isStealed
+      isStealed : false
     }
 
   return {
     amount : userToStealCash / 2,
-    isStealed
+    isStealed : true
   }
 }
 

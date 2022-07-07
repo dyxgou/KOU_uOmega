@@ -56,8 +56,8 @@ const rob : ICallback = async (interaction) =>
     }
     else
     {
-      await userStealing.updateOne({ $inc : { cash : amount } })
-      await userToSteal.updateOne({ $inc : { cash : -amount } })
+      await userStealing.updateOne({ $inc : { cash : -amount } })
+      await userToSteal.updateOne({ $inc : { cash : amount } })
     }
   } catch (error) {
     console.error(error)
