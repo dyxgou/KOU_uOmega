@@ -9,6 +9,9 @@
     "ms": "2.1.3",
     "mathjs": "10.6.4"
   },
+  "engines": {
+    "node": "16.15.0"
+  },
   "scripts": {
     "co": "sui-mono commit",
     "build": "tsc",
