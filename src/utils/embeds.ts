@@ -45,3 +45,13 @@ export const userNotFound = ({ interaction } : IMessageEmbed) =>
 
   return embed
 }
+
+export const profileNotFound = ({ interaction } : IMessageEmbed) =>
+{
+  const embed = messageEmbed({ interaction , name : "| 💌 | Profile not found - Dates" })
+    .setDescription(`${interaction.user}, parece que no tienes un perfil creado para tus citas. o.O
+    
+    💌 Para crear un perfil, solo tienes que usar \`/create-profile\`. 💌`)
+
+  return embed
+}
