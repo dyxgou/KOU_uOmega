@@ -5,7 +5,7 @@ export interface IUser extends Document
   userId : string,
   guildId : string,
   cash : number,
-  bank : number
+  bank : number,
 }
 
 const UserSchema = new Schema<IUser>({
@@ -25,6 +25,7 @@ const UserSchema = new Schema<IUser>({
     type : Number ,
     default : 0
   }
+
 } , { timestamps : true })
 
 export default model("users" , UserSchema)
